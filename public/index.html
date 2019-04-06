@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<!-- saved from url=(0067)file:///C:/Users/Patrick%20Copp/Desktop/A3%20Stub/public/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Patrick is a god</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="CHANGE ME">
+    <meta name="keywords" content="CHANGE ME">
+    <meta name="author" content="CHANGE ME">
+    <!-- Load jquery, bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="file:///C:/style.css">
+    <!-- Custom CSS End -->
+    <style>
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 100%;
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 8px;
+    }
+
+tr:nth-child(even){background-color: #f2f2f2}
+</style>
+</head>
+<body>
+
+  <div id="loggingin">
+  <form id="LOGIN">
+    USERNAME:<br>
+    <input id="username" type=text name="username" required><br>
+    PASSWORD:<br>
+    <input id="password" type=text name="password"><br>
+    DATABASE:<br>
+    <input id="database" type=text name="database"><br>
+
+    <input id="loginButton" type="submit" value="Submit">
+  </form>
+  </div>
+
+
+  <div id="databaseStuff">
+  <h3>Database</h3>
+  <button type="button" id="storeFiles">Store all Files</button>
+  <button type="button" id="clearData">Clear all Data</button>
+  <button type="button" id="dbStatus">Display Database Status</button>
+
+  <p>
+    <br/>
+  </p>
+  <select id = "dbSelect" onchange="updateDBThing()">
+    <option value="displayDate" selected>Display Events by Start Date</option>
+    <option value="displayEvents">Display Events From a Specific File</option>
+    <option value="conflictEvents">Display Conflicting Events</option>
+    <option value="versionNumber">Display all files with specific version</option>
+    <option value="conflictAlarms">Display all alarms with conflicting triggers</option>
+    <option value="eventsWithAlarms">Display all events with alarms and their alarms</option>
+    </select>
+    <button type="button" id="dbGo">Go!</button>
+
+    <div id="displayEventThings">
+
+    </div>
+  </div>
+
+  <p>
+    <br/>
+  </p>
+
+    <!-- Status Panel -->
+    <h3>Status Panel</h3>
+    <div id="statView" style="height:200px;width:700px;overflow:scroll;padding:10px;align="center"">
+
+    </div>
+    <button type="button" id="buttonClear">Clear</button>
+    <p>
+      <br/>
+    </p>
+
+    <!-- File Log panel -->
+    <h3>File Log Panel</h3>
+    <div id="fileView"style="height:200px;width:600px;overflow:auto">
+
+    </div>
+
+
+    <form id="uploadFile" method="POST" action="/upload" enctype="multipart/form-data">
+    <input id = "uploadFile" type="file" name="uploadFile" accept = ".ics">
+    <input type="submit" value="Upload File">
+    </form>
+
+    <p>
+      <br/>
+    </p>
+
+
+
+    <!-- Calendar view panel -->
+
+
+    <h3>Event Viewer</h3>
+    <select id = "calViewSelect" onchange="selectMenu()">
+      </select>
+    <div id="calView2" style="height:200px;width:600px;overflow:auto">
+
+      </div>
+      <select id = "eventChoice" onchange="">
+        </select>
+
+    <button id="showAlarmsButton" type="button">Show Event's Alarms</button>
+    <button id="showEventPropsButton" type="button">Show Event's Properties</button>
+
+    <p>
+      <br/>
+      <br/>
+    </p>
+
+    <h3>New Calendar</h3>
+    <form id="newCalendar">
+      Filename:<br>
+      <input id="newCalFilename" type=text name="fileName" required><br>
+      Product ID:<br>
+      <input id="newCalprodID" type=text name="prodID" required><br>
+      Version:<br>
+      <input id="newCalVersion" type=NUMBER name="version" required><br>
+      Event UID:<br>
+      <input id="newCalEventUID" type=text name="version" required><br>
+      Creation DateTime (yyyymmddThhmmss (include Z on end for UTC)):<br>
+      <input id="newCalEventDTSTAMP" type=text name="version" required><br>
+      Start DateTime (yyyymmddThhmmss (include Z on end for UTC)):<br>
+      <input id="newCalEventDTSTART" type=text name="version" required><br>
+
+      <input id="submitCalButton" type="submit" value="Submit">
+    </form>
+    <hr>
+
+    <p>
+      <br/>
+      <br/>
+    </p>
+
+    <h3>New Event</h3>
+    <select id = "eventViewSelect">
+      </select>
+    <form id="newEvent">
+      DTSTAMP:<br>
+      <input id="DTSTAMP" type=text name="dtstamp" required><br>
+      User ID:<br>
+      <input id="UID" type=text name="UID" required><br>
+      DTSTART:<br>
+      <input id="DTSTART" type=text name="dtstart" required><br>
+      Summary:<br>
+      <input id="SUMMARY" type=text name="summary"><br>
+      <input id="submitEventButton" type="submit" value="Submit">
+    </form>
+    <hr>
+
+    <p>
+      <br/>
+      <br/>
+    </p>
+
+
+
+    <!-- Leave me at the bottom of body -->
+    <script src="/index.js"></script>
+
+
+
+
+
+
+
+
+
+</body></html>
